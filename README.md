@@ -22,4 +22,23 @@ c. Convert any categorical features to numerical features using one-hot encoding
 
 d. Split the data into training and testing sets.
 
-![Screenshot](screenshot.png)
+<font color='pink'><b><h2> visualization </h2></font></b> 
+
+![Screenshot](https://github.com/amnaahmad20/parkinson-telemonitoring-uci-dataset/blob/main/data.png)
+<font color='teal'><b><h1> Step 3</h1></font></b>
+
+Model Selection and Training:
+
+a. Choose a machine learning model appropriate for your problem.
+
+b. Train the model on the training set.
+
+c. Evaluate the performance of the model on the testing set using metrics such as
+accuracy, precision, recall, and F1-score.
+
+
+it indicates that the Random Forest Regression model has performed reasonably well on the Parkinson's dataset.
+
+The high R-squared values for both the training and test sets (0.9991 and 0.9942, respectively) indicate that the model is able to explain a large proportion of the variance in the target variable, which is a good sign.
+
+The mean squared error (MSE) for the test set (0.6630) is higher than the MSE for the training set (0.1032), which is expected as the model usually performs better on the data that it was trained on than on new, unseen data. However, the difference between the two MSE values is not very large, which suggests that the model is not overfitting the training data excessively.
