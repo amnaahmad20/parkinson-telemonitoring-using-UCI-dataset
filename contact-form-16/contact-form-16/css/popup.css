@@ -1,21 +1,21 @@
 .popup {
     position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
+    justify-content: center;
     height: 100%;
+    margin: auto;
+    width: 50%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
     display: none;
 }
 .popup-content {
     background-color: white;
-    margin: 10% auto;
-    padding: 20px;
+    /* margin: 10% auto; */
+    /* padding: 20px; */
     border: 1px solid #888888;
-    width: 30%;
+    /* width: 30%; */
     font-weight: bolder;
+    float: left;
 }
 .popup-content button {
     display: block;
@@ -26,4 +26,9 @@
 }
 h1 {
     color: green;
+}
+
+
+.cross {
+    float: right;
 }
