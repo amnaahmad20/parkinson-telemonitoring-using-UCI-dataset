@@ -56,7 +56,7 @@
                             Age
                           </label>
                           {% if data %}
-                          <input type="number" step="any" min=0.00000001 placeholder="{{data.age.0}}" name="age" id="age"
+                          <input type="number" step="any" min=0.00000001 value="{{data.age.0}}" name="age" id="age"
                             class="formbold-form-input" required  />
                           {% else %}
                           <input type="number" step="any" min=0.00000001 name="age" id="age" placeholder="Age"
@@ -72,7 +72,7 @@
                             Sex
                           </label>
                           {% if data %}
-                          <input type="number" step="any" min="0" max="1" placeholder="{{ data.sex.0 }}" name="sex" id="sex" class="formbold-form-input" required />
+                          <input type="number" step="any" min="0" max="1" value="{{ data.sex.0 }}" name="sex" id="sex" class="formbold-form-input" required />
                           {% else %}
                           <input type="number" step="any" min="0" max="1" name="sex" id="sex" placeholder="Male = 0 / Female = 1" class="formbold-form-input" required />
                           {% endif %}
@@ -211,11 +211,8 @@
                         </div>
                       </div>
                     
-                      {% if data %}
-                      <a href="/"><button type="button">Clear</button></a>
-                      {% else %}
                       <button type="submit">Predict</button>
-                      {% endif %}
+                      
                     </div>
                 </form>
               </div>
