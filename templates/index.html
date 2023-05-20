@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icomoon/style.css') }}" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+
+  <!-- Style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- form -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}" />
+
+  <!-- popup -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/popup.css') }}" />
+
+  <title>ML Project</title>
+</head>
+
+<body>
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center" style=padding-right:3rem;">
+        <div class="col-md-12">
+          <div class="row justify-content-center">
+            <div class="col-md-4" style="padding-top: 3rem">
+              <h3 class="heading mb-4" style="font-size: 2rem">
+                Parkinson's Disease Severity Prediction using Random Forest Regressor
+              </h3>
+              <p>
+                ML model predicts Parkinson's severity using voice features for
+                diagnosis
+              </p>
+
+              <p>
+                <img src="{{ url_for('static', filename='images/undraw-contact.svg') }}" alt="Image"
+                  class="img-fluid" />
+              </p>
+            </div>
+            <div class="col-lg-8">
+              <div class="formbold-main-wrapper">
+                <div class="formbold-form-wrapper">
+                  <form id="myForm" action="{{ url_for('predict')}}" method="post">
+
+                    <div class="flex flex-wrap formbold--mx-3">
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5 w-full">
+                          <label for="age" class="formbold-form-label">
+                            Age
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 placeholder="{{data.age.0}}" name="age" id="age"
+                            class="formbold-form-input" required  />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="age" id="age" placeholder="Age"
+                            class="formbold-form-input" required  />
+                          {% endif %}
+                        </div>
+                      </div>
+
+
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                          <label for="sex" class="formbold-form-label">
+                            Sex
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min="0" max="1" placeholder="{{ data.sex.0 }}" name="sex" id="sex" class="formbold-form-input" required />
+                          {% else %}
+                          <input type="number" step="any" min="0" max="1" name="sex" id="sex" placeholder="Male = 0 / Female = 1" class="formbold-form-input" required />
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="flex flex-wrap formbold--mx-3">
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                          <label for="motor_UPDRS" class="formbold-form-label">
+                            motor_UPDRS
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 value="{{ data.motor_updrs.0 }}" name="motor_UPDRS" id="motor_UPDRS"
+                            class="formbold-form-input" required />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="motor_UPDRS" id="motor_UPDRS"
+                            placeholder="Motor Unified Parkinson's Disease Rating Scale" class="formbold-form-input" required />
+                          {% endif %}
+                        </div>
+                      </div>
+
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5 w-full">
+                          <label for="Jitter(Abs)" class="formbold-form-label">
+                            Jitter(Abs)
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 value="{{ data.jitter_abs.0 }}" name="Jitter(Abs)" id="Jitter(Abs)"
+                            class="formbold-form-input" required />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="Jitter(Abs)" id="Jitter(Abs)"
+                            placeholder="Absolute Jitter" class="formbold-form-input" required />
+                          {% endif %}
+                          </div>
+                      </div>
+
+                    </div>
+
+                    <div class="flex flex-wrap formbold--mx-3">
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                          <label for="Shimmer:APQ11" class="formbold-form-label">
+                            Shimmer:APQ11
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 value="{{ data.shimmer_apq11.0 }}" name="Shimmer:APQ11" id="Shimmer:APQ11"
+                            class="formbold-form-input" required />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="Shimmer:APQ11" id="Shimmer:APQ11"
+                            placeholder="Amplitude Perturbation Quotient" class="formbold-form-input" required />
+                          {% endif %}
+                          </div>
+                      </div>
+
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                          <label for="Shimmer:DDA" class="formbold-form-label">
+                            Shimmer:DDA
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 value="{{ data.shimmer_dda.0 }}" name="Shimmer:DDA" id="Shimmer:DDA"
+                            class="formbold-form-input" required />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="Shimmer:DDA" id="Shimmer:DDA"
+                            placeholder=" Difference, Differential, Amplitude" class="formbold-form-input" required />
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="flex flex-wrap formbold--mx-3">
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                          <label for="HNR" class="formbold-form-label">
+                            HNR
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 value="{{ data.hnr.0 }}" name="HNR" id="HNR" placeholder="Harmonic-to-Noise Ratio"
+                            class="formbold-form-input" required />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="HNR" id="HNR" placeholder="Harmonic-to-Noise Ratio"
+                            class="formbold-form-input" required />
+                          {% endif %}
+                          </div>
+                      </div>
+
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                          <label for="RPDE" class="formbold-form-label">
+                            RPDE
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 value="{{ data.rpde.0 }}" name="RPDE" id="RPDE"
+                            placeholder="Recurrence Period Density Entropy" class="formbold-form-input" required />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="RPDE" id="RPDE"
+                            placeholder="Recurrence Period Density Entropy" class="formbold-form-input" required />
+                          {% endif %}
+                          </div>
+                      </div>
+                    </div>
+
+
+                    <div class="flex flex-wrap formbold--mx-3">
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                          <label for="PPE" class="formbold-form-label">
+                            PPE
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 value="{{ data.ppe.0 }}" name="PPE" id="PPE" placeholder="Pitch Period Entropy"
+                            class="formbold-form-input" required />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="PPE" id="PPE" placeholder="Pitch Period Entropy"
+                            class="formbold-form-input" required />
+                          {% endif %}
+                          </div>
+                      </div>
+
+
+                      <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                          <label for="ratio" class="formbold-form-label">
+                            ratio
+                          </label>
+                          {% if data %}
+                          <input type="number" step="any" min=0.00000001 value="{{ data.ratio.0 }}" name="ratio" id="ratio"
+                            placeholder="Shimmer:APQ3 / Shimmer:APQ5" class="formbold-form-input"required  />
+                          {% else %}
+                          <input type="number" step="any" min=0.00000001 name="ratio" id="ratio"
+                            placeholder="Shimmer:APQ3 / Shimmer:APQ5" class="formbold-form-input"required  />
+                          {% endif %}
+                        </div>
+                      </div>
+                    
+                      {% if data %}
+                      <a href="/"><button type="button">Clear</button></a>
+                      {% else %}
+                      <button type="submit">Predict</button>
+                      {% endif %}
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    {% if prediction %}
+    <div id="popup-box">
+      <div class="popup-content" style="width: 90%; padding: 20px;">
+        <h1 style="color: black">TOTAL_UDPRS: {{prediction}}</h1>
+        <p style="color: #6a64f1; font-weight: 600;">
+          {{severity}}
+        </p>
+
+      </div>
+
+    </div>
+    {% endif %}
+
+
+  </div>
+</body>
+
+<script>const input = document.querySelector('input');
+
+  // Add an input event listener to the input element
+  input.addEventListener('focus', function() {
+    // Clear the input field value
+    input.value = '';
+  });
+ 
+  myButton.addEventListener("click", function () {
+    myPopup.classList.add("show");
+  });
+  closePopup.addEventListener("click", function () {
+    myPopup.classList.remove("show");
+  });
+  window.addEventListener("click", function (event) {
+    if (event.target == myPopup) {
+      myPopup.classList.remove("show");
+    }
+  });
+</script>
+
+</html>
